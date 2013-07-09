@@ -33,21 +33,23 @@ enough of the dribble, let's get to the setup basics.
 Jekyll is written in [Ruby](http://www.ruby.com) a highly object oriented
 language which likely needs no introduction.  (However, if it does, I recommend
 "Programming Ruby, The Pragmatic Progammers' Guide.")  So, to run Jekyll you need ruby on your machine.  I use Ubuntu as my primary OS so I needed Ruby on my
-laptop and VPS to begin.
+laptop and VPS to begin using Jekyll.
 
-First, let's discuss the development machine, my laptop.  I searched around
-and found that installing the debian package of ruby was not recommended as it
-was old and apparently not well maintained.  This seems odd to me, seeing that
-ruby is pretty cutting edge these days, as well as being **extremely** popular
-if [stackoverflow](http://www.stackoverflow.com) is any indication.  So I found
+First, let's discuss the development machine, my laptop, we'll come back to my
+VPS at on another post.  I searched around and found that installing the debian
+package of ruby was not recommended, as it was old and apparently not well
+maintained.  This seems odd to me, seeing that ruby is pretty cutting edge
+these days, as well as being **extremely** popular if
+[stackoverflow](http://www.stackoverflow.com) is any indication.  I found
 some instructions online that recommended **not** installing ruby into a more
-traditional `/bin/` location but in the user's home directory.  This sounded
-familiar to the last post about the `node.js` requirements so I was a little
-hesitant, but found that the ruby solution is much less intrusive.  I had
-read that the best plan of attack for `node.js` is to `chown` the `/usr/local`
-directory to either your user account or someother user account that will
-be in your group.  This just didn't ring true to me, so I shyed away from it,
-more because I feared hosing my system accidentally.
+traditional `/bin/` location but rather in the user's home directory.  This
+sounded familiar to the [last post]({{ page.previous.url }}) about the
+`node.js` requirements so I was a little hesitant, but found that the ruby
+solution is much less intrusive. I had read that the best plan of attack for
+`node.js` is to `chown` the `/usr/local` directory to either your user account
+or some other user account that will be in your group.  This just didn't ring
+true to me, so I shyed away from it, more because I feared hosing my system
+accidentally.
 
 I found that ruby was already on my system, so I removed it completely with
 no deliterious effects.
