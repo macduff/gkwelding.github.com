@@ -5,7 +5,7 @@ layout: post
 slug: jekyll-setup-pt-render
 title: Jekyll Rendering
 summary: "Jekyll Setup Part II: Rendering"
-image: 'jekyll/logo-2x.png'
+image: 'how-to-jekyll/logo-2x.png'
 tags:
 - jekyll 
 - blog
