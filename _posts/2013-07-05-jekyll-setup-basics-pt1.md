@@ -5,7 +5,7 @@ layout: post
 slug: jekyll-setup-ruby
 title: Jekyll Setup Ruby
 summary: "Jekyll Setup Part I: The Basics"
-image: 'jekyll/logo-2x.png'
+image: 'how-to-jekyll/Rubyprogramminglanguagelogo2008.png'
 tags:
 - jekyll 
 - blog
