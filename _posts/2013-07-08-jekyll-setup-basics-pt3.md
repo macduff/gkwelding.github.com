@@ -1,6 +1,6 @@
 ---
 comments: true
-date: 2013-07-05 15:00:00
+date: 2013-07-08 15:00:00
 layout: post
 slug: jekyll-setup-vps
 title: Jekyll Setup VPS
