@@ -1,2 +1,3 @@
-This repo contains a blog for the liquid interia site.
+This repo contains a blog for the liquidinertia.com site hosted by a
+non-github server.
 
