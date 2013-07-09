@@ -2,7 +2,7 @@ jQuery(document).ready(function() {
 	$('#gf').text('GitHub Followers');
     $('#gfr').text('GitHub Repos');		
 	
-	JSONP( 'https://api.github.com/users/gkwelding?callback=?', function( response ) {
+	JSONP( 'https://api.github.com/users/macduff?callback=?', function( response ) {
 		var data = response.data;
 		$('#gf').text(data.followers + ' GitHub Followers');
         $('#gfr').text(data.public_repos + ' GitHub Repos');
@@ -21,7 +21,7 @@ jQuery(document).ready(function() {
 	}	
 	
 	$('#ghw').githubWidget({
-			'username': 'gkwelding',
+			'username': 'macduff',
 			'displayActions': false,
 			'firstCount': 10,
 			'displayHeader': false,
@@ -100,3 +100,4 @@ jQuery(document).ready(function() {
     };
     search();
 });
+
