@@ -5,7 +5,7 @@ layout: post
 slug: jekyll-setup-vps
 title: Jekyll Setup VPS
 summary: "Jekyll Setup Part III: Virtual Private Server"
-image: 'building-a-blog-using-jekyll-and-github-pages/wp_github_jekyll.png'
+image: 'how-to-jekyll/wp_github_jekyll.png'
 tags:
 - jekyll 
 - blog
