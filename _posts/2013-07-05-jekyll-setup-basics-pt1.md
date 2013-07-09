@@ -2,8 +2,8 @@
 comments: true
 date: 2013-07-05 14:30:00
 layout: post
-slug: jekyll-setup-basics
-title: Jekyll Setup Basics
+slug: jekyll-setup-ruby
+title: Jekyll Setup Ruby
 summary: "Jekyll Setup Part I: The Basics"
 image: 'jekyll/logo-2x.png'
 tags:
