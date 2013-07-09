@@ -2,17 +2,16 @@ auto: true
 markdown: rdiscount
 pygments: true
 
-title: In The Attic
+title: Liquid Inertia 
 
-url: http://www.in-the-attic.com
+url: http://www.liquidinertia.com
 
 permalink: /:year/:month/:day/:title/
 
 author:
-    name: Garry Welding
-    email: gkwelding@gmail.com
-    github: gkwelding
-    twitter: GarryWelding
+    name: Chris Wynkoop 
+    email: macduff@liquidinertia.com 
+    github: macduff
     gravatar: http://www.gravatar.com/avatar/5b7d3122776b44cfb18ed7aa865804a1.png
 
 comments:
