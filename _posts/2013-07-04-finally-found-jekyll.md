@@ -81,7 +81,7 @@ found a very well designed site by [Garry Welding](http://in-the-attic.com).
 I cloned it, made some minor customizations and now have this blog! 
 Outstanding!  Of course, you can find the source at
 [github](http://www.github.com/macduff).  I would recommend any interested
-persons follow [his blog post](http://in-the-attic/somewhere) to get it
+persons follow [his blog post](http://in-the-attic/2013/01/04/building-a-blog-using-jekyll-bootstrap-and-github-pages-a-beginners-guide) to get it
 straight from the source.  In one fell swoop you get tag support(not standard
 with Jekyll), [bootstrap](http://bootstrap.com) integration, and a host of
 other nicities and eye candy.  Enjoy!
