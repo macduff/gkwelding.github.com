@@ -39,4 +39,6 @@ all one has to do is:
 
 I didn't notice the **ml** on the end and wound up getting set up for an old version of the `blahtexml` from an Ubuntu PPA.  Totally unessecary, but only cost me a few minutes.
 
-`
+*But*, if you go with Maruku, then your posts may not be rendered as HTML5
+complaint.  So it looks like I need another path to LaTex rendering...
+
