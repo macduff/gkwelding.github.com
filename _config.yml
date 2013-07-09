@@ -16,7 +16,7 @@ author:
 comments:
     provider: disqus
     disqus:
-        short_name: intheatticuk
+        short_name: liquidinertia
         
 analytics:
     provider: google 
