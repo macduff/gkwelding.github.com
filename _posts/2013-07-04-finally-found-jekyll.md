@@ -5,7 +5,7 @@ layout: post
 slug: finally-found-jekyll
 title: Finally Found Jekyll
 summary: "The blog engine I've been looking for"
-image: 'the-getfingerprint-method/getfingerprint.jpg'
+image: 'generic-software/generic-software-screen.jpg'
 tags:
 - jekyll 
 - blog
