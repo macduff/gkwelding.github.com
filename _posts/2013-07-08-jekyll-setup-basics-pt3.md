@@ -3,6 +3,7 @@ comments: true
 date: 2013-07-08 15:00:00
 layout: post
 slug: jekyll-setup-vps
+
 title: Jekyll Setup VPS
 summary: "Jekyll Setup Part III: Virtual Private Server"
 image: 'how-to-jekyll/wp_github_jekyll.png'
@@ -12,8 +13,89 @@ tags:
 - server
 ---
 
-Now I shall explain henceforth and wheretofore one may setup Ruby and Git
-on a Virtual Private Server.
+## Motivation:
+
+If we're already using Jekyll, then why should we even go to the trouble
+of hosting it ourselves? I mean, we could just get it hosted for **free** on
+Github.  That's pretty crazy simple, follow the [simple instructions](http://github.com/thoseinstructions) and boom, you're blog is up!  You can even pay a
+paltry sum and get it to resolve you custom domain and then get private
+github repos to boot!
+
+This is a pretty sweet deal, however, since github is being so incredibly
+generous with their server space, they do require something in exchange.  You
+can't really use any of the Jekyll Ruby plugins due to security concerns.  The
+only way to add functionality is through the Liquid templating language, which
+can be pretty tricky.  Since I'm more interested in functionality, like tags,
+categories, sitemap generation, etc. I'm quite motivated to setup the blog to
+run on my own virtual private server.
+
+## Server Prerequisites
+
+To host a Jekyll blog is a little tricky, but all things considered, it's
+pretty easy.  I'm going to assume that the interested reader is running
+something like Ubuntu 12.04 LTS or later with Apache up and rolling.
+
+### Git
+
+Git installation is pretty much a piece of cake.
+
+    sudo apt-get install git git-base git-core git-svn gitk git-gui
+
+That should pretty much get `git` on your system, no problems.  What we'd really
+like is to have an automated method of deploying our content online.
+Fortunately for us, this can easily be accomplished using a simple recieve hook
+that is part of the git repo that we will soon create.  There are other methods
+to accomplish this task, but I'll outline the one that I found conceptually
+the simplest to implement.
+
+
+#### Setup A Deployment Account
+
+We'll setup an account that will be used only for the sole purpose of updating
+our git repo on our server.  This technique can be used to host many different
+repos on the same server, and in theory, could allow many users to push and
+pull changes to the repo.  Since it's using the same user account, some might
+be hesitant, but have no fear, it's likely that you'll be the only one that
+needs to update your *personal* blog, right?  :-)
+
+We'll give our user the name of `deployer` to be consistent with some of the
+other documentation for Jekyll, but feel free to change the name to whatever
+you choose.
+
+    sudo groupadd git-data
+    sudo useradd -g git-data deployer
+
+This should create a new user account with the initial login group of
+`git-data`.  It will also ask for a password, be sure to choose a strong
+password and one you'll remember.  I tend to think the intersection of the
+set of strong passwords and ones you'll remember are equivalent to the empty
+set, so I would recommend looking into password software like
+[password safe](http://passwordsafe.com) or [KeePass](http://keepass.com).
+
+Now, let's create a location where our git repos will be stored.  I've run
+across recommendations to place it in `/opt/git/`, after looking into this
+option I've decided I like it!
+
+    # create the directory
+    sudo mkdir -p /opt/git
+    # make it so that the directory and all subdirectories
+    # will be part of the git-data group
+    sudo chgrp git-data /opt/git/
+    sudo chmod g+s /opt/git/
+
+### Ruby
+
+As we discussed on a [earlier post](http://post), Ruby should not be installed
+using `apt-get` as the debian package is painfully old and just causes a lot
+of problems.  Before, we installed Ruby on our development machine in our `home`
+directory.  This is not such a good plan when hosted on a server where
+different accounts need access to the same Ruby and gem set.  So, we'll have to
+go after a different plan of attack.
+
+
+### Let's test
+
+mark it down
 
 Git post-update hook
 ====================
