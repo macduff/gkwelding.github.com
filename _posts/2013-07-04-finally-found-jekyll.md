@@ -10,12 +10,15 @@ tags:
 - jekyll 
 - blog
 ---
+This will likely be the first post in a series about the Jekyll, blog-aware,
+static site generator in Ruby.  
+
 I've been looking for a blogging vehicle for quite some time now.  Nothing has
 been able to fit my needs.  Fortunately for me I just found
 [Jekyll](http://www.jekyll.com)!  This is **exactly** what I've needed!
 Ultimately, I've been looking for a platform that would fit the following:
 
-1. Allow me to make all my content in **Markdown**.
+1. Use **Markdown** to write all post content.
 2. Minimal, preferably no, design required at initial deployment. 
 3. Concentrate on content, not blog plugin management or web framework.
 

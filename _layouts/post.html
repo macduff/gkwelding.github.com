@@ -3,30 +3,44 @@ layout: layout
 ---
 
 <div class="content">    
-    <div class="row">	
-        <div class="span7 column">
-            <h1>{{ page.title }}</h1>
-        </div>
+  <div class="row">	
+    <div class="span7 column">
+      <h1>{{ page.title }}</h1>
+    </div>
+  </div>
+    
+  <div class="row">	
+    <div class="span7 columns">
+      {{ content }}
+    </div>
+  </div>
+    
+  <div class="pager hidden-phone hidden-tablet">
+    <a class="prev"
+		   href="{{ page.previous.url }}"
+			 title="Previous Post: {{page.previous.title}}">
+	    <i class="icon-arrow-left icon-white"></i>
+	  </a>
+    <a class="next"
+		   href="{{ page.next.url }}"
+			 title="Next Post: {{page.next.title}}">
+			 <i class="icon-arrow-right icon-white"></i></a>
     </div>
     
     <div class="row">	
-        <div class="span7 columns">
-            {{ content }}
-        </div>
-    </div>
-    
-    <div class="pager hidden-phone hidden-tablet">
-        <a class="prev" href="{{ page.previous.url }}" title="Previous Post: {{page.previous.title}}"><i class="icon-arrow-left icon-white"></i></a>
-        <a class="next" href="{{ page.next.url }}" title="Previous Post: {{page.next.title}}"><i class="icon-arrow-right icon-white"></i></a>
-    </div>
-    
-    <div class="row">	
-        <div class="span7 column">
-            <p>
-              <i class="icon-calendar"></i> {{ page.date | date: "%B %e, %Y" }}
-              | <i class="icon-comment"></i> <a href="{{ page.url }}#disqus_thread" data-disqus-identifier="{{ page.url }}"></a>     
+      <div class="span7 column">
+        <p>
+          <i class="icon-calendar"></i> {{ page.date | date: "%B %e, %Y" }}
+              | <i class="icon-comment"></i>
+							<a href="{{ page.url }}#disqus_thread"
+							   data-disqus-identifier="{{ page.url }}"></a>     
               <br />
-              <i class="icon-tags"></i> Tags :{% for tag in page.tags %} <a href="/tags/{{ tag }}" rel="tooltip" title="View pages tagged with &quot;{{ tag }}&quot;"><span class="label label-info">{{ tag }}</span></a>  {% if forloop.last != true %} {% endif %} {% endfor %}
+              <i class="icon-tags"></i> Tags :{% for tag in page.tags %}
+							<a href="/tags/{{ tag }}"
+							   rel="tooltip"
+								 title="View pages tagged with &quot;{{ tag }}&quot;">
+						    <span class="label label-info">{{ tag }}</span></a> 
+								{% if forloop.last != true %} {% endif %} {% endfor %}
               <br />
               <g:plusone size="medium"></g:plusone></h5>
             </p>
@@ -37,7 +51,7 @@ layout: layout
     <div class="row">	
         <div class="span7 columns">    
             <h2>Comments Section</h2>
-            <p>Feel free to comment on the post but keep it clean and on topic.</p>	
+            <p>Feel free to comment on the post!  Guidelines: This blog is rated G.</p>	
             <div id="disqus_thread"></div>
             <script type="text/javascript">
                 /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
@@ -68,4 +82,4 @@ layout: layout
       })();
     </script>
 </div>
-    
+
