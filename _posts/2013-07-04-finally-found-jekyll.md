@@ -15,7 +15,7 @@ static site generator in Ruby.
 
 I've been looking for a blogging vehicle for quite some time now.  Nothing has
 been able to fit my needs.  Fortunately for me I just found
-[Jekyll](http://www.jekyll.com)!  This is **exactly** what I've needed!
+[Jekyll](http://jekyllrb.com/)!  This is **exactly** what I've needed!
 Ultimately, I've been looking for a platform that would fit the following:
 
 1. Use **Markdown** to write all post content.
@@ -25,12 +25,12 @@ Ultimately, I've been looking for a platform that would fit the following:
 Jekyll hits the nail on the head in all these categories.  I was amazed to find that it had just what I needed.
 
 A friend of mine that does a lot of Linux/Embedded Linux consulting
-[Cliff Brake](http://www.bse.com) first pointed me in the way of
-[blacksmith](http://www.blacksmith.com). He's such an incredible engineer
+[Cliff Brake](http://bec-systems.com/site/) first pointed me in the way of
+[blacksmith](http://blog.nodejitsu.com/introducing-blacksmith). He's such an incredible engineer
 that I took his advice hook line and sinker.
 
 
-I went off installing [node.js](http://node.js.com) on my laptop and VPS to
+I went off installing [node.js](http://nodejs.org/) on my laptop and VPS to
 start the ball rolling.  I found that it did not appear to run as advertised
 on my machine.  Knowing that it was clearly something on my end since it would
 appear that many people are using `blacksmith` without any difficulty I started
@@ -60,7 +60,7 @@ based application.
 
 
 However, I could not seem to get `blacksmith` under control, so I turned to its
-cousin, [wintersmith](http://www.wintersmith.com).  Again, I found it was not
+cousin, [wintersmith](http://wintersmith.io/).  Again, I found it was not
 as easy to run as I first had hoped.  I was beginning to become discouraged and
 feared I would return to the Wordpress disaster that I had left behind.  Then, 
 I called to remembrance the complete failure that I had with Wordpress and kept
@@ -83,6 +83,6 @@ Outstanding!  Of course, you can find the source at
 [github](http://www.github.com/macduff).  I would recommend any interested
 persons follow [his blog post](http://in-the-attic/2013/01/04/building-a-blog-using-jekyll-bootstrap-and-github-pages-a-beginners-guide) to get it
 straight from the source.  In one fell swoop you get tag support(not standard
-with Jekyll), [bootstrap](http://bootstrap.com) integration, and a host of
+with Jekyll), [bootstrap](http://twitter.github.io/bootstrap/) integration, and a host of
 other nicities and eye candy.  Enjoy!
 

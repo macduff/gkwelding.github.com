@@ -17,9 +17,10 @@ tags:
 
 If we're already using Jekyll, then why should we even go to the trouble
 of hosting it ourselves? I mean, we could just get it hosted for **free** on
-Github.  That's pretty crazy simple, follow the [simple instructions](http://github.com/thoseinstructions) and boom, you're blog is up!  You can even pay a
-paltry sum and get it to resolve you custom domain and then get private
-github repos to boot!
+Github.  That's pretty crazy simple, follow the
+[simple instructions](https://help.github.com/articles/using-jekyll-with-pages)
+and boom, you're blog is up!  You can even pay a paltry sum and get it to
+resolve you custom domain and then get private github repos to boot!
 
 This is a pretty sweet deal, however, since github is being so incredibly
 generous with their server space, they do require something in exchange.  You
@@ -63,14 +64,14 @@ other documentation for Jekyll, but feel free to change the name to whatever
 you choose.
 
     sudo groupadd git-data
-    sudo useradd -g git-data deployer
+    sudo useradd -g git-data -G www-data deployer
 
 This should create a new user account with the initial login group of
 `git-data`.  It will also ask for a password, be sure to choose a strong
 password and one you'll remember.  I tend to think the intersection of the
 set of strong passwords and ones you'll remember are equivalent to the empty
 set, so I would recommend looking into password software like
-[password safe](http://passwordsafe.com) or [KeePass](http://keepass.com).
+[password safe](http://passwordsafe.sourceforge.net/) or [KeePass](http://keepass.info).
 
 Now, let's create a location where our git repos will be stored.  I've run
 across recommendations to place it in `/opt/git/`, after looking into this
@@ -85,10 +86,10 @@ option I've decided I like it!
 
 ### Ruby
 
-As we discussed on a [earlier post](http://post), Ruby should not be installed
-using `apt-get` as the debian package is painfully old and just causes a lot
-of problems.  Before, we installed Ruby on our development machine in our `home`
-directory.  This is not such a good plan when hosted on a server where
+As we discussed on a [earlier post]({{ page.previous.url }}) , Ruby should not
+be installed using `apt-get` as the debian package is painfully old and just
+causes a lot of problems.  Before, we installed Ruby on our development machine
+in our `home` directory.  This is not such a good plan when hosted on a server where
 different accounts need access to the same Ruby and gem set.  So, we'll have to
 go after a different plan of attack.
 

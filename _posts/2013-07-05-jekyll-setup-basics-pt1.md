@@ -30,7 +30,7 @@ philosophy, these words are like music to the ear.  Finally, a way to keep
 a web page up to date using only a text editor, if one is so inclined.  Okay,
 enough of the dribble, let's get to the setup basics.
 
-Jekyll is written in [Ruby](http://www.ruby.com) a highly object oriented
+Jekyll is written in [Ruby](http://www.ruby-lang.org/en/) a highly object oriented
 language which likely needs no introduction.  (However, if it does, I recommend
 "Programming Ruby, The Pragmatic Progammers' Guide.")  So, to run Jekyll you need ruby on your machine.  I use Ubuntu as my primary OS so I needed Ruby on my
 laptop and VPS to begin using Jekyll.
