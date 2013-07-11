@@ -53,6 +53,7 @@ the simplest to implement.
 #### Setup A Deployment Account
 
 We'll setup an account that will be used only for the sole purpose of updating
+
 our git repo on our server.  This technique can be used to host many different
 repos on the same server, and in theory, could allow many users to push and
 pull changes to the repo.  Since it's using the same user account, some might
@@ -64,14 +65,46 @@ other documentation for Jekyll, but feel free to change the name to whatever
 you choose.
 
     sudo groupadd git-data
-    sudo useradd -g git-data -G www-data deployer
+    sudo useradd -g git-data -G www-data --shell /usr/bin/git-shell deployer
 
 This should create a new user account with the initial login group of
-`git-data`.  It will also ask for a password, be sure to choose a strong
+`git-data`.  Notice we set the shell of this user to be a `git-shell`.  This
+shell only allows a few commands and will help keep our server secure.  When we
+create the user it will also ask for a password.  Be sure to choose a strong
 password and one you'll remember.  I tend to think the intersection of the
 set of strong passwords and ones you'll remember are equivalent to the empty
 set, so I would recommend looking into password software like
 [password safe](http://passwordsafe.sourceforge.net/) or [KeePass](http://keepass.info).
+
+### Ruby
+
+As we discussed on a [earlier post]({{ page.previous.url }}) , Ruby should not
+be installed using `apt-get` as the debian package is painfully old and just
+causes a lot of problems.  Before, we installed Ruby on our development machine
+in our `home` directory.  This is not such a good plan when hosted on a server where
+different accounts need access to the same Ruby and gem set.  So, we'll have to
+go after a different plan of attack.
+
+First step is to install the [Ruby Version Manager](http://rvm.io), which will help
+make our lives far easier.
+
+    sudo  bash << \
+		  (curl -s https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer )
+    source /usr/local/rvm/scripts/rvm
+    which rvm
+      /usr/local/rvm/bin/rvm
+
+So now we have a Ruby Version Manager from `/usr/local/rvm/bin`, which is system wide
+accessible, perfect!
+
+Now, let's install jekyll and rdiscount to render the blog:
+
+    sudo gem install jekyll
+    sudo gem install rdiscount
+
+With any luck, we now should be ready to serve up a jekyll blog of our very own!
+
+### Repo Location
 
 Now, let's create a location where our git repos will be stored.  I've run
 across recommendations to place it in `/opt/git/`, after looking into this
@@ -84,68 +117,109 @@ option I've decided I like it!
     sudo chgrp git-data /opt/git/
     sudo chmod g+s /opt/git/
 
-### Ruby
+We can now create a bare repository in our `git` directory to use for our blog.
 
-As we discussed on a [earlier post]({{ page.previous.url }}) , Ruby should not
-be installed using `apt-get` as the debian package is painfully old and just
-causes a lot of problems.  Before, we installed Ruby on our development machine
-in our `home` directory.  This is not such a good plan when hosted on a server where
-different accounts need access to the same Ruby and gem set.  So, we'll have to
-go after a different plan of attack.
+    sudo cd /opt/git
+    sudo git init --bare yourblog.github.com
+
+I'm assuming you're going to open source your website and mirror it in github as
+well, but it's not a requirement.  :-)  Now, let's change permissions on the new
+repo.
+
+    sudo chown -R deployer:git-data .
+
+But that's not all!  We can also modify the bare repo to automagically update our blog
+site.  How neat is that!  :0)
+
+    sudo vi yourblog.github.com/hooks/post-recieve
+
+Let's fill out the recieve hook:
+
+{% highlight bash %}
+
+#!/bin/bash
+
+# initialize the ruby version manager
+source /usr/local/rvm/scripts/rvm
+
+# assuming you put your blog in /var/www/blog
+GIT_REPO=/opt/git/yourblog.github.com.git
+TMP_GIT_CLONE=$HOME/tmp/yourblog.github.com
+PUBLIC_WWW=/var/www/blog/yourblog.github.com
+
+git clone $GIT_REPO $TMP_GIT_CLONE
+jekyll build -s $TMP_GIT_CLONE -d $PUBLIC_WWW
+rm -Rf $TMP_GIT_CLONE
+exit
+
+{% endhighlight %}
+
+This will automagically update your blog and serve it up, as long as you update
+your Apache configuration to allow a link to `/var/www/blog`.
+
+### Push Up Your Blog
+
+It's time for our blog to go live!  We can just start with any old blog, like the default
+one that comes with jekyll, and push that to our new repository.
+
+    # on local machine for testing
+    jekyll new testBlog
+    cd testBlog
+    git init .
+    git add .
+    git commit -m "testing blog"
+    git remote add deployer deployer@yourdomainname.com:/opt/git/yourblog.github.com
+    git push deployer master
+
+We should get a prompt that tells us to enter our password and then see the beauty that is
+a repo push.  If you don't want to horse around with entering your password everytime, you
+can follow the forthcoming instructions. which have mostly been lifted from the
+[jekyll homepage](http://jekyllrb.com/docs/deployment-methods/).
+
+### Authorized Users
+
+Let’s walk through setting up SSH access on the server side. In this example,
+you’ll use the `authorized_keys` method for authenticating your users.
+Create a .ssh directory for that user.
+
+{% highlight bash %}
+
+$ sudo cd /home/deployer
+$ sudo mkdir .ssh
+$ sudo chown deployer:git-data .ssh
+$ sudo chmod 755 .ssh
+$ sudo touch .ssh/authorized_keys
+$ sudo chown deployer:git-data .ssh/authorized_keys
+$ sudo chmod 600 .ssh/authorized_keys
+
+{% endhighlight %}
+
+The last bit of permissions is explained in the Unix Stack Exchange question, 
+[problems with public key authentication](http://unix.stackexchange.com/questions/36540/why-am-i-still-getting-a-password-prompt-with-ssh-with-public-key-authentication)
+
+> Make sure the permissions on the ~/.ssh directory and its contents are
+> proper. When I first set up my ssh key auth, I didn't have the ~/.ssh
+> folder properly set up, and it yelled at me.
+
+* Your home directory `~` and your `~/.ssh` directory on the remote machine
+  must be writable only by you: `rwx------` and `rwxr-xr-x` are fine, 
+  but `rwxrwx---` is no good, even if you are the only user in your group
+  (if you prefer numeric modes: `700` or `755`, not `775`).
+* Your private key file (on the local machine) must be readable and
+  writable only by you: `rw-------`, i.e. `600`.
+* Your `~/.ssh/authorized_keys` file (on the remote machine) must be
+  readable (at least `400`), but you'll need it to be also writable
+  (`600`) if you will add any more keys to it.
 
 
-### Let's test
+Next, you need to add your SSH public keys to the `authorized_keys` file for each
+account you want to have authorized access.  Do the next bit on your development machine.
 
-mark it down
-
-Git post-update hook
-====================
-
-If you store your jekyll site in Git (you are using version control, right?), it’s pretty easy to automate the deployment process by setting up a post-update hook in your Git repository, like this.
-Git post-receive hook
-
-To have a remote server handle the deploy for you every time you push changes using Git, you can create a user account which has all the public keys that are authorized to deploy in its authorized_keys file. With that in place, setting up the post-receive hook is done as follows:
-
-    laptop$ ssh deployer@myserver.com
-    server$ mkdir myrepo.git
-    server$ cd myrepo.git
-    server$ git --bare init
-    server$ cp hooks/post-receive.sample hooks/post-receive
-    server$ mkdir /var/www/myrepo
-
-Next, add the following lines to hooks/post-receive and be sure Jekyll is installed on the server:
-
-    GIT_REPO=$HOME/myrepo.git
-    TMP_GIT_CLONE=$HOME/tmp/myrepo
-    PUBLIC_WWW=/var/www/myrepo
-
-    git clone $GIT_REPO $TMP_GIT_CLONE
-    jekyll build -s $TMP_GIT_CLONE -d $PUBLIC_WWW
-    rm -Rf $TMP_GIT_CLONE
-    exit
-
-Finally, run the following command on any users laptop that needs to be able to deploy using this hook:
-
-    laptops$ git remote add deploy deployer@myserver.com:~/myrepo.git
-
-Git Server Setup
-================
-
-4.4 Git on the Server - Setting Up the Server
----------------------------------------------
-
-### Setting Up the Server
-
-Let’s walk through setting up SSH access on the server side. In this example, you’ll use the authorized_keys method for authenticating your users. We also assume you’re running a standard Linux distribution like Ubuntu. First, you create a 'git' user and a .ssh directory for that user.
-
-$ sudo adduser git
-$ su git
-$ cd
-$ mkdir .ssh
-
-Next, you need to add some developer SSH public keys to the authorized_keys file for that user. Let’s assume you’ve received a few keys by e-mail and saved them to temporary files. Again, the public keys look something like this:
-
-$ cat /tmp/id_rsa.john.pub
+{% highlight bash %}
+$ cd ~/.ssh
+$ ssh-keygen -f id_rsa.yourkeys -C '' -N '' -t rsa -q 
+$ sudo chmod 600 id_rsa.yourkeys
+$ cat id_rsa.yourkeys.pub
 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCB007n/ww+ouN4gSLKssMxXnBOvf9LGt4L
 ojG6rs6hPB09j9R/T17/x4lhJA0F3FR1rP6kYBRsWj2aThGw6HXLm9/5zytK6Ztg3RPKK+4k
 Yjh6541NYsnEAZuXz0jTTyAUfrtU3Z5E003C4oxOj6H0rfIF1kKI9MAQLMdpGW1GYEIgS9Ez
@@ -153,53 +227,22 @@ Sdfd8AcCIicTDWbqLAcU4UpkaX8KyGlLwsNuuGztobF8m72ALC/nLF6JLtPofwFBlgc+myiv
 O7TCUSBdLQlgMVOFq1I2uPWQOkOWQAHukEOmfjy2jctxSDBQ220ymjaNsHT4kgtZg2AYYgPq
 dAv8JggJICUvax2T9va5 gsg-keypair
 
-You just append them to your authorized_keys file:
+{% endhighlight %}
 
-$ cat /tmp/id_rsa.john.pub >> ~/.ssh/authorized_keys
-$ cat /tmp/id_rsa.josie.pub >> ~/.ssh/authorized_keys
-$ cat /tmp/id_rsa.jessica.pub >> ~/.ssh/authorized_keys
+Now, get the public key up to the server and just append them to your
+`authorized_keys` file on the server, logged in as a
+[sudoer](http://www.sudo.ws/sudoers.man.html):
 
-Now, you can set up an empty repository for them by running git init with the --bare option, which initializes the repository without a working directory:
+{% highlight bash %}
 
-$ cd /opt/git
-$ mkdir project.git
-$ cd project.git
-$ git --bare init
+$ sudo cp /home/deploy/.ssh/authorized_keys .
+$ sudo chmod 777 authorized_keys
+$ cat id_rsa.yourkeys.pub >> authorized_keys
+$ sudo chmod 600 authorized_keys
+$ sudo cp authorized_keys /home/deploy/.ssh/authorized_keys
 
-Then, John, Josie, or Jessica can push the first version of their project into that repository by adding it as a remote and pushing up a branch. Note that someone must shell onto the machine and create a bare repository every time you want to add a project. Let’s use gitserver as the hostname of the server on which you’ve set up your 'git' user and repository. If you’re running it internally, and you set up DNS for gitserver to point to that server, then you can use the commands pretty much as is:
+{% endhighlight %}
 
-# on Johns computer
-$ cd myproject
-$ git init
-$ git add .
-$ git commit -m 'initial commit'
-$ git remote add origin git@gitserver:/opt/git/project.git
-$ git push origin master
+### Let's test
 
-At this point, the others can clone it down and push changes back up just as easily:
-
-$ git clone git@gitserver:/opt/git/project.git
-$ cd project
-$ vim README
-$ git commit -am 'fix for the README file'
-$ git push origin master
-
-With this method, you can quickly get a read/write Git server up and running for a handful of developers.
-
-As an extra precaution, you can easily restrict the 'git' user to only doing Git activities with a limited shell tool called git-shell that comes with Git. If you set this as your 'git' user’s login shell, then the 'git' user can’t have normal shell access to your server. To use this, specify git-shell instead of bash or csh for your user’s login shell. To do so, you’ll likely have to edit your /etc/passwd file:
-
-$ sudo vim /etc/passwd
-
-At the bottom, you should find a line that looks something like this:
-
-git:x:1000:1000::/home/git:/bin/sh
-
-Change /bin/sh to /usr/bin/git-shell (or run which git-shell to see where it’s installed). The line should look something like this:
-
-git:x:1000:1000::/home/git:/usr/bin/git-shell
-
-Now, the 'git' user can only use the SSH connection to push and pull Git repositories and can’t shell onto the machine. If you try, you’ll see a login rejection like this:
-
-$ ssh git@gitserver
-fatal: What do you think I am? A shell?
-Connection to gitserver closed.
+Now, mosey on over to your blog web page and you should be greeted by a warm default blog page.
