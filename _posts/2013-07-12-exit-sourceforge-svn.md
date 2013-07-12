@@ -6,7 +6,7 @@ slug: git-out-of-sourceforge-svn
 
 title: Exit Sourceforge SVN to Git 
 summary: "Git out of Sourceforge SVN, it's EASY!"
-image: 'how-to-jekyll/wp_github_jekyll.png'
+image: 'svn-to-git/svn-to-git.jpg'
 tags:
 - git
 - svn
