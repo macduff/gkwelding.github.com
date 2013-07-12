@@ -12,7 +12,7 @@ tags:
 - svn
 ---
 
-# Why Would I Leave the Loving Arms of SourceForge?
+## Why Would I Leave the Loving Arms of SourceForge?
 
 Please, I am not looking to wreck any kind of relationship
 that has been established over the years or months.  I just
@@ -29,7 +29,7 @@ going.
 
 That is so lame, I'm sorry.
 
-# Make a Backup Repo Copy
+## Make a Backup Repo Copy
 
 This is the secret in the sauce.  We `rsync` the bare SVN repo
 onto our local machine and life is good.  Instructions are lifted
@@ -40,7 +40,7 @@ from [here](http://sourceforge.net/apps/trac/sourceforge/wiki/Subversion#Backups
 [Adrian Smith](http://www.17od.com/2010/11/11/migrating-a-sourceforge-subversion-repository-to-github/) also writes about this feature of SourceForge
 which makes backups **and** conversions a snap!
 
-# Install svn2git
+## Install svn2git
 
 `svn2git` does what its name implies, but in a very robust amazing
 way.  For those of you who have yet to install `rvm` I would recommend
@@ -54,9 +54,17 @@ If you've been crusty, or on a server, and you've installed `rvm` and
 friends to `/usr/local` you'll of course need a `sudo` in front of the
 `gem` command.
 
-I found the following gist pretty helpful in the invocation of the
-`svn2git` command:
+## Convert the Local Bare Repo Copy to Git!
 
-  <script src="https://gist.github.com/ebadedude/3823092.js"></script>
+There are many `svn2git` command examples out there.  Some can
+be pretty confusing for the SVN novice.  Adrian Smith lays it out like:
 
+    svn2git file:///home/adrian/upm.sourceforge/ --trunk swing/trunk --branches swing/branches --tags swing/tags --authors ../upm-authors
+
+One confusing part might be, "How do I know that the `trunk` is
+`swing/trunk`?"  A valid concern, but also one that is specific to the SVN
+repository.  You can cheat and add `--rootistrunk` to just get a copy in
+Git.  You may also want to check out this
+[gist](https://gist.github.com/ebadedude/3823092#file-sourceforge-svn-to-github-git) as it's pretty comprehensive.
+being pulled down.
 
