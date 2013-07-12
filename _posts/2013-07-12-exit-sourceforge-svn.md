@@ -56,6 +56,16 @@ friends to `/usr/local` you'll of course need a `sudo` in front of the
 
 ## Convert the Local Bare Repo Copy to Git!
 
+First, you'll need an empty git repo.
+
+    mkdir mySourceForgeProject
+    cd mySourceForgeProject
+    git init .
+
+When invoked, `svn2git` will blast everything into the current working
+directory.  By creating the above repo first, we avoid having to sift
+through our working directory later. 
+
 There are many `svn2git` command examples out there.  Some can
 be pretty confusing for the SVN novice.  Adrian Smith lays it out like:
 
@@ -66,5 +76,5 @@ One confusing part might be, "How do I know that the `trunk` is
 repository.  You can cheat and add `--rootistrunk` to just get a copy in
 Git.  You may also want to check out this
 [gist](https://gist.github.com/ebadedude/3823092#file-sourceforge-svn-to-github-git) as it's pretty comprehensive.
-being pulled down.
+
 
