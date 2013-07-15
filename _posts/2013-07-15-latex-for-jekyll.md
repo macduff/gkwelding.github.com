@@ -33,13 +33,13 @@ Examples taken from the MathJax [Demo Page](http://mathjax.org/demos/tex-samples
 
 ### The Lorentz Equations
 
-    \[
-    \begin{aligned}
-    \dot{x} & = \sigma(y-x) \\
-    \dot{y} & = \rho x - y - xz \\
-    \dot{z} & = -\beta z + xy
-    \end{aligned}
-    \]
+`\[
+\begin{aligned}
+\dot{x} & = \sigma(y-x) \\
+\dot{y} & = \rho x - y - xz \\
+\dot{z} & = -\beta z + xy
+\end{aligned}
+\]`
 
 #### The Cauchy-Schwarz Inequality
 
