@@ -6,7 +6,7 @@ slug: latex-and-jekyll
 
 title: Render LaTeX in Jekyll with RDiscount
 summary: "Time to enhance our blog with LaTeX Rendering!"
-image: 'svn-to-git/svn-to-git.jpg'
+image: 'latex-jekyll-render/latex.png'
 tags:
 - latex
 - jekyll
@@ -14,7 +14,7 @@ tags:
 
 ## LaTex and Jekyll
 
-As I've written in a [previous post](), I would like to be able
+As I've written in a [previous post](http://www.liquidinertia.com/2013/07/05/jekyll-setup-basics-pt2/), I would like to be able
 to render LaTeX within my blog posts.  Every once and a while it
 seems that you want to describe something with a formula, and really,
 LaTeX is the way to go.
