@@ -10,6 +10,7 @@ tags:
 - jekyll 
 - blog
 ---
+
 This will likely be the first post in a series about the Jekyll, blog-aware,
 static site generator in Ruby.  
 

@@ -12,7 +12,7 @@ tags:
 - jekyll
 ---
 
-## LaTex and Jekyll
+# LaTex and Jekyll
 
 As I've written in a [previous post](http://www.liquidinertia.com/2013/07/05/jekyll-setup-basics-pt2/), I would like to be able
 to render LaTeX within my blog posts.  Every once and a while it
@@ -33,13 +33,13 @@ Examples taken from the MathJax [Demo Page](http://mathjax.org/demos/tex-samples
 
 ### The Lorentz Equations
 
-`\[
-\begin{aligned}
-\dot{x} & = \sigma(y-x) \\
-\dot{y} & = \rho x - y - xz \\
-\dot{z} & = -\beta z + xy
-\end{aligned}
-\]`
+    \[
+    \begin{aligned}
+    \dot{x} & = \sigma(y-x) \\
+    \dot{y} & = \rho x - y - xz \\
+    \dot{z} & = -\beta z + xy
+    \end{aligned}
+    \]
 
 #### The Cauchy-Schwarz Inequality
 
