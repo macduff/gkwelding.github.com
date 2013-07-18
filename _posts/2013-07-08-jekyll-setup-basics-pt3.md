@@ -110,12 +110,14 @@ Now, let's create a location where our git repos will be stored.  I've run
 across recommendations to place it in `/opt/git/`, after looking into this
 option I've decided I like it!
 
-    # create the directory
-    sudo mkdir -p /opt/git
-    # make it so that the directory and all subdirectories
-    # will be part of the git-data group
-    sudo chgrp git-data /opt/git/
-    sudo chmod g+s /opt/git/
+{% highlight bash %}
+# create the directory
+sudo mkdir -p /opt/git
+# make it so that the directory and all subdirectories
+# will be part of the git-data group
+sudo chgrp git-data /opt/git/
+sudo chmod g+s /opt/git/
+{% endhighlight %}
 
 We can now create a bare repository in our `git` directory to use for our blog.
 

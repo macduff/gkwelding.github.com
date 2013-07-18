@@ -5,6 +5,8 @@ title: Liquid Inertia
 
 url: http://www.liquidinertia.com
 
+devurl: localhost:4000
+
 permalink: /:year/:month/:day/:title/
 
 author:
