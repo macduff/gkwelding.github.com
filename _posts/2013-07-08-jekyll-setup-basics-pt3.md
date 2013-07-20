@@ -40,7 +40,9 @@ something like Ubuntu 12.04 LTS or later with Apache up and rolling.
 
 Git installation is pretty much a piece of cake.
 
-    sudo apt-get install git git-base git-core git-svn gitk git-gui
+{% highlight console %}
+sudo apt-get install git git-base git-core git-svn gitk git-gui
+{% endhighlight %}
 
 That should pretty much get `git` on your system, no problems.  What we'd really
 like is to have an automated method of deploying our content online.
@@ -64,8 +66,10 @@ We'll give our user the name of `deployer` to be consistent with some of the
 other documentation for Jekyll, but feel free to change the name to whatever
 you choose.
 
-    sudo groupadd git-data
-    sudo useradd -g git-data -G www-data --shell /usr/bin/git-shell deployer
+{% highlight console %}
+sudo groupadd git-data
+sudo useradd -g git-data -G www-data --shell /usr/bin/git-shell deployer
+{% endhighlight %}
 
 This should create a new user account with the initial login group of
 `git-data`.  Notice we set the shell of this user to be a `git-shell`.  This
@@ -88,19 +92,23 @@ go after a different plan of attack.
 First step is to install the [Ruby Version Manager](http://rvm.io), which will help
 make our lives far easier.
 
-    sudo  bash << \
-		  (curl -s https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer )
-    source /usr/local/rvm/scripts/rvm
-    which rvm
-      /usr/local/rvm/bin/rvm
+{% highlight console %}
+sudo  bash << \
+	(curl -s https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer )
+source /usr/local/rvm/scripts/rvm
+which rvm
+	/usr/local/rvm/bin/rvm
+{% endhighlight %}
 
 So now we have a Ruby Version Manager from `/usr/local/rvm/bin`, which is system wide
 accessible, perfect!
 
 Now, let's install jekyll and rdiscount to render the blog:
 
-    sudo gem install jekyll
-    sudo gem install rdiscount
+{% highlight console %}
+sudo gem install jekyll
+sudo gem install rdiscount
+{% endhighlight %}
 
 With any luck, we now should be ready to serve up a jekyll blog of our very own!
 
@@ -110,7 +118,7 @@ Now, let's create a location where our git repos will be stored.  I've run
 across recommendations to place it in `/opt/git/`, after looking into this
 option I've decided I like it!
 
-{% highlight bash %}
+{% highlight console %}
 # create the directory
 sudo mkdir -p /opt/git
 # make it so that the directory and all subdirectories
@@ -121,19 +129,25 @@ sudo chmod g+s /opt/git/
 
 We can now create a bare repository in our `git` directory to use for our blog.
 
-    sudo cd /opt/git
-    sudo git init --bare yourblog.github.com
+{% highlight console %}
+sudo cd /opt/git
+sudo git init --bare yourblog.github.com
+{% endhighlight %}
 
 I'm assuming you're going to open source your website and mirror it in github as
 well, but it's not a requirement.  :-)  Now, let's change permissions on the new
 repo.
 
-    sudo chown -R deployer:git-data .
+{% highlight console %}
+sudo chown -R deployer:git-data .
+{% endhighlight %}
 
 But that's not all!  We can also modify the bare repo to automagically update our blog
 site.  How neat is that!  :0)
 
-    sudo vi yourblog.github.com/hooks/post-recieve
+{% highlight console %}
+sudo vi yourblog.github.com/hooks/post-recieve
+{% endhighlight %}
 
 Let's fill out the recieve hook:
 
@@ -164,14 +178,16 @@ your Apache configuration to allow a link to `/var/www/blog`.
 It's time for our blog to go live!  We can just start with any old blog, like the default
 one that comes with jekyll, and push that to our new repository.
 
-    # on local machine for testing
-    jekyll new testBlog
-    cd testBlog
-    git init .
-    git add .
-    git commit -m "testing blog"
-    git remote add deployer deployer@yourdomainname.com:/opt/git/yourblog.github.com
-    git push deployer master
+{% highlight console %}
+# on local machine for testing
+jekyll new testBlog
+cd testBlog
+git init .
+git add .
+git commit -m "testing blog"
+git remote add deployer deployer@yourdomainname.com:/opt/git/yourblog.github.com
+git push deployer master
+{% endhighlight %}
 
 We should get a prompt that tells us to enter our password and then see the beauty that is
 a repo push.  If you don't want to horse around with entering your password everytime, you
@@ -184,16 +200,14 @@ Let’s walk through setting up SSH access on the server side. In this example,
 you’ll use the `authorized_keys` method for authenticating your users.
 Create a .ssh directory for that user.
 
-{% highlight bash %}
-
-$ sudo cd /home/deployer
-$ sudo mkdir .ssh
-$ sudo chown deployer:git-data .ssh
-$ sudo chmod 755 .ssh
-$ sudo touch .ssh/authorized_keys
-$ sudo chown deployer:git-data .ssh/authorized_keys
-$ sudo chmod 600 .ssh/authorized_keys
-
+{% highlight console %}
+sudo cd /home/deployer
+sudo mkdir .ssh
+sudo chown deployer:git-data .ssh
+sudo chmod 755 .ssh
+sudo touch .ssh/authorized_keys
+sudo chown deployer:git-data .ssh/authorized_keys
+sudo chmod 600 .ssh/authorized_keys
 {% endhighlight %}
 
 The last bit of permissions is explained in the Unix Stack Exchange question, 
@@ -217,32 +231,29 @@ The last bit of permissions is explained in the Unix Stack Exchange question,
 Next, you need to add your SSH public keys to the `authorized_keys` file for each
 account you want to have authorized access.  Do the next bit on your development machine.
 
-{% highlight bash %}
-$ cd ~/.ssh
-$ ssh-keygen -f id_rsa.yourkeys -C '' -N '' -t rsa -q 
-$ sudo chmod 600 id_rsa.yourkeys
-$ cat id_rsa.yourkeys.pub
+{% highlight console %}
+cd ~/.ssh
+ssh-keygen -f id_rsa.yourkeys -C '' -N '' -t rsa -q 
+sudo chmod 600 id_rsa.yourkeys
+cat id_rsa.yourkeys.pub
 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCB007n/ww+ouN4gSLKssMxXnBOvf9LGt4L
 ojG6rs6hPB09j9R/T17/x4lhJA0F3FR1rP6kYBRsWj2aThGw6HXLm9/5zytK6Ztg3RPKK+4k
 Yjh6541NYsnEAZuXz0jTTyAUfrtU3Z5E003C4oxOj6H0rfIF1kKI9MAQLMdpGW1GYEIgS9Ez
 Sdfd8AcCIicTDWbqLAcU4UpkaX8KyGlLwsNuuGztobF8m72ALC/nLF6JLtPofwFBlgc+myiv
 O7TCUSBdLQlgMVOFq1I2uPWQOkOWQAHukEOmfjy2jctxSDBQ220ymjaNsHT4kgtZg2AYYgPq
 dAv8JggJICUvax2T9va5 gsg-keypair
-
 {% endhighlight %}
 
 Now, get the public key up to the server and just append them to your
 `authorized_keys` file on the server, logged in as a
 [sudoer](http://www.sudo.ws/sudoers.man.html):
 
-{% highlight bash %}
-
-$ sudo cp /home/deploy/.ssh/authorized_keys .
-$ sudo chmod 777 authorized_keys
-$ cat id_rsa.yourkeys.pub >> authorized_keys
-$ sudo chmod 600 authorized_keys
-$ sudo cp authorized_keys /home/deploy/.ssh/authorized_keys
-
+{% highlight console %}
+sudo cp /home/deploy/.ssh/authorized_keys .
+sudo chmod 777 authorized_keys
+cat id_rsa.yourkeys.pub >> authorized_keys
+sudo chmod 600 authorized_keys
+sudo cp authorized_keys /home/deploy/.ssh/authorized_keys
 {% endhighlight %}
 
 ### Let's test

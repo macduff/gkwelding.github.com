@@ -4,3 +4,4 @@
 {% include css/custom.css %}
 {% include css/bootstrap/bootstrap-responsive.min.css %}
 {% include js/bootstrap/google-code-prettify/prettify.css %}
+{% include css/pygments.css %}
