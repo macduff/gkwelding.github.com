@@ -1,6 +1,6 @@
 ---
 ---
-{% include css/bootstrap/bootstrap.min.css %}
+{% include css/bootstrap/bootstrap.css %}
 {% include css/custom.css %}
-{% include css/bootstrap/bootstrap-responsive.min.css %}
+{% include css/bootstrap/bootstrap-responsive.css %}
 {% include css/pygments.css %}
