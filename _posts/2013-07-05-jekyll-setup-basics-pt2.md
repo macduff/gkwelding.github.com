@@ -18,7 +18,9 @@ sophisticated, that will cost you another `gem`.  For example,
 [Garry Welding](http://in-the-attic.com) prefers the `rdiscount` gem which
 can be easily installed via:
 
-    gem install rdiscount
+{% highlight console %}
+gem install rdiscount
+{% endhighlight %}
 
 If you get a complaint about permissions or needing to be root, you may want
 to review my [last post]({{ page.previous.url }}) how to install ruby and gems
@@ -27,7 +29,9 @@ for Jekyll.
 Then to enable RDiscount, head on over to your `_config.yml` file and set the
 `markdown` field.
 
-    markdown: rdiscount
+{% highlight yaml %}
+markdown: rdiscount
+{% endhighlight %}
 
 Personally, I'd rather have the option to use LaTex, pronounced, say it with
 me now Lay-Tek.  Maruku has the ability to render LaTex to PNG files using
@@ -35,7 +39,9 @@ me now Lay-Tek.  Maruku has the ability to render LaTex to PNG files using
 `blahtex` on your Ubuntu machine with something like version 11ish or greater
 all one has to do is:
 
-    sudo apt-get install blahtexml
+{% highlight console %}
+sudo apt-get install blahtexml
+{% endhighlight %}
 
 I didn't notice the **ml** on the end and wound up getting set up for an old version of the `blahtexml` from an Ubuntu PPA.  Totally unessecary, but only cost me a few minutes.
 

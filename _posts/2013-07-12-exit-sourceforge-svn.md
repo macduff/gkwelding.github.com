@@ -35,7 +35,9 @@ This is the secret in the sauce.  We `rsync` the bare SVN repo
 onto our local machine and life is good.  Instructions are lifted
 from [here](http://sourceforge.net/apps/trac/sourceforge/wiki/Subversion#Backups).
 
-    rsync -av PROJECTNAME.svn.sourceforge.net::svn/PROJECTNAME/* .
+{% highlight console %}
+rsync -av PROJECTNAME.svn.sourceforge.net::svn/PROJECTNAME/* .
+{% endhighlight %}
 
 [Adrian Smith](http://www.17od.com/2010/11/11/migrating-a-sourceforge-subversion-repository-to-github/) also writes about this feature of SourceForge
 which makes backups **and** conversions a snap!
@@ -48,7 +50,9 @@ checking out one of my [previous posts]().  Then, installation is a
 total breeze.  If you install it to your `HOME` directory, installation
 should be as easy as:
 
-    gem install svn2git
+{% highlight console %}
+gem install svn2git
+{% endhighlight %}
 
 If you've been crusty, or on a server, and you've installed `rvm` and
 friends to `/usr/local` you'll of course need a `sudo` in front of the
@@ -58,9 +62,11 @@ friends to `/usr/local` you'll of course need a `sudo` in front of the
 
 First, you'll need an empty git repo.
 
-    mkdir mySourceForgeProject
-    cd mySourceForgeProject
-    git init .
+{% highlight console %}
+mkdir mySourceForgeProject
+cd mySourceForgeProject
+git init .
+{% endhighlight %}
 
 When invoked, `svn2git` will blast everything into the current working
 directory.  By creating the above repo first, we avoid having to sift
@@ -69,7 +75,9 @@ through our working directory later.
 There are many `svn2git` command examples out there.  Some can
 be pretty confusing for the SVN novice.  Adrian Smith lays it out like:
 
-    svn2git file:///home/adrian/upm.sourceforge/ --trunk swing/trunk --branches swing/branches --tags swing/tags --authors ../upm-authors
+{% highlight console %}
+svn2git file:///home/adrian/upm.sourceforge/ --trunk swing/trunk --branches swing/branches --tags swing/tags --authors ../upm-authors
+{% endhighlight %}
 
 One confusing part might be, "How do I know that the `trunk` is
 `swing/trunk`?"  A valid concern, but also one that is specific to the SVN
