@@ -19,7 +19,7 @@ end
 
 desc "Startup Jekyll"
 task :start do
-  sh "jekyll server --watch"
+  sh "jekyll server --watch --port 4001"
 end
 
 task :default => :start
