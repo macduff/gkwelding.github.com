@@ -6,9 +6,10 @@ slug: all-builtin-pygments-styles
 
 title: Pygments for Jekyll
 summary: "Sample of All Pygments Styles in Jekyll"
-image: 'how-to-jekyll/wp_github_jekyll.png'
+image: 'pygments/pygments.jpeg'
 tags:
 - jekyll
+- python
 - pygments
 ---
 
