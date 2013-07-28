@@ -28,4 +28,7 @@ a basic embedded code generation package *eek!*, we can still compile our
 routines for the host machine, in my case Ubuntu Linux.  We can write our
 fixed point filter as a function and design it to be built for either an
 embedded target or our host machine.
+![Single Pole Filter Input](/img/posts/fixedpt-digital-filter/input.png)
+![Single Pole Filter Output](/img/posts/fixedpt-digital-filter/output.png)
+![Single Pole Filter Input/Output](/img/posts/fixedpt-digital-filter/io.png)
 
