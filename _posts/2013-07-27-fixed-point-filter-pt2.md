@@ -30,7 +30,6 @@ fixed point filter as a function and design it to be built for either an
 embedded target or our host machine.
 
 Without any further ado, here's the routine:
-
 {% pylight c style=native %}
 /* dfilt_single_pole
  *  Parameters:
@@ -48,12 +47,12 @@ dfilt_single_pole_u16(uint16_t input, uint16_t prev_output, uint16_t alpha)
   uint16_t output;                  /* current time step output */
   uint32_t beta = ((1<<15)-alpha);  /* coefficient of previous output */
   /* calculate the previous output term and scale to output scaling */
-  uint32_t y1 = (beta*prev_output) >> 15;
+  uint16_t y1 = (beta*(uint32_t)prev_output) >> 15;
   /* calculate the input term and scale to output scaling */
-  uint32_t u1 = (alpha*input) >> 15;
-  /* calculate current filter output */
+  uint16_t u1 = ((uint32_t)alpha*(uint32_t)input) >> 15;
+	/* calculate current filter output */
   output = y1 + u1;
-  return output;
+	return output;
 }
 {% endpylight %}
 
@@ -64,11 +63,12 @@ First, let's look at the `beta` variable which is chosen to be `1-alpha`, where
 \alpha = \frac{T_{s}}{T_{s} + \tau_{c}}
 {% endmath %}
 
-with {% m %}Ts > 0{% em %} and {% m %}\tau > 0{% em %} we see that
-alpha must always be less than one.  Equal to one would indicate that the
-inverse of the angular cutoff frequency is zero, meaning that the cutoff
-frequency is approaching infinity.  If this were so, there would be no
-need for a filter.  :-)
+with {% m %}Ts > 0{% em %}
+and {% m %}\tau > 0{% em %} we see that `alpha` must always
+be less than one.  Equal to one would indicate that the inverse of the
+angular cutoff frequency is zero, meaning that the cutoff frequency is
+approaching infinity.  If this were so, there would be no need for a
+filter.  :-)
 
 So we know the range of the `alpha` parameter is `[0,1)`, but we have
 not specified the resolution.  If we choose to use two bytes as our standard
@@ -124,8 +124,4 @@ and `X` is the number of shifts.  Now we have our two coefficients.  Whew!
 I hope this is worth it!
 
 Next time we'll look at putting these values to work!
-
-![Single Pole Filter Input](/img/posts/fixedpt-digital-filter/input.png)
-![Single Pole Filter Output](/img/posts/fixedpt-digital-filter/output.png)
-![Single Pole Filter Input/Output](/img/posts/fixedpt-digital-filter/io.png)
 
