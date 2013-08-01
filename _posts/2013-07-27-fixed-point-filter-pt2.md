@@ -30,7 +30,7 @@ fixed point filter as a function and design it to be built for either an
 embedded target or our host machine.
 
 Without any further ado, here's the routine:
-{% pylight c style=native %}
+{% highlight cpp %}
 /* dfilt_single_pole
  *  Parameters:
  *    input - current input to the filter
@@ -54,7 +54,7 @@ dfilt_single_pole_u16(uint16_t input, uint16_t prev_output, uint16_t alpha)
   output = y1 + u1;
 	return output;
 }
-{% endpylight %}
+{% endhighlight %}
 
 First, let's look at the `beta` variable which is chosen to be `1-alpha`, where
 `alpha` is our only filter calibration constant.  Since the value of alpha is
@@ -115,9 +115,9 @@ scaled up, left shifted by 15 places.  We can assume in our function that
 `alpha` is already scaled.  However, when we calculate `beta` we must compute
 `1-alpha`.  Since `alpha` is scaled, we must scale the `1` as well.
 
-{% pylight c style=native %}
+{% highlight cpp %}
 beta = (1<<15) - alpha /* now scaled by l15 */
-{% endpylight %}
+{% endhighlight %}
 
 Commonly used notation is the `lX` where `l` is the left shift operator
 and `X` is the number of shifts.  Now we have our two coefficients.  Whew!

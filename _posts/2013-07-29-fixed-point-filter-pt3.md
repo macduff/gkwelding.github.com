@@ -14,7 +14,7 @@ tags:
 
 Let's return to our fix point filter example code.
 
-{% pylight c style=native %}
+{% highlight cpp %}
 /* dfilt_single_pole
  *  Parameters:
  *    input - current input to the filter
@@ -34,11 +34,11 @@ dfilt_single_pole_u16(uint16_t input, uint16_t prev_output, uint16_t alpha)
   uint16_t y1 = (beta*(uint32_t)prev_output) >> 15;
   /* calculate the input term and scale to output scaling */
   uint16_t u1 = ((uint32_t)alpha*(uint32_t)input) >> 15;
-	/* calculate current filter output */
+  /* calculate current filter output */
   output = y1 + u1;
-	return output;
+  return output;
 }
-{% endpylight %}
+{% endhighlight %}
 
 Where we have `alpha` and `beta` scaled by a radix of `15`, or left shifted by
 `15`.  Ultimately, the equation we are looking to implement is:
@@ -63,19 +63,19 @@ calculation.  We can also, just cast the input values to four byte numbers
 and then remove the radix point scaling to allow the value to fit into two
 bytes.
 
-{% pylight c style=native %}
+{% highlight cpp %}
   uint16_t y1 = (beta*(uint32_t)prev_output) >> 15;
-{% endpylight %}
+{% endhighlight %}
 
 The above will calculate the intermediate value of the output term.  Now to sum the
 two values.  Since we have removed the `15` bit radix scaling, the remaining scaling
 is the scaling of the input variable.  No more scaling need be performed.  To calculate
 the output, all that must be done is to sum the intermediate input and output terms.
 
-{% pylight c style=native %}
+{% highlight cpp %}
 	/* calculate current filter output */
   output = y1 + u1;
-{% endpylight %}
+{% endhighlight %}
 
 For my application, the signal to filter was very slow and sampled at a period of 0.5 seconds.
 I chose the cutoff frequency to be 0.1 Hz.  At this point, the filter should attenuate
