@@ -43,9 +43,11 @@ dfilt_single_pole_u16(uint16_t input, uint16_t prev_output, uint16_t alpha)
 Where we have `alpha` and `beta` scaled by a radix of `15`, or left shifted by
 `15`.  Ultimately, the equation we are looking to implement is:
 
-{% math %}
+{% raw %}
+<script type="math/tex; mode=display">
 y_{k} = ( 1 - \alpha ) y_{k-1} + \alpha u_{k}
-{% endmath %}
+</script>
+{% endraw %}
 
 So we must multiply `beta` and the previous output, `alpha` and the current
 input to the filter and then sum the result.  The input and output of the filter
@@ -53,9 +55,11 @@ is defined to be an unsigned two byte number.  If we consider the maximum value 
 the product, we can assume the maximum fixed point value for each input to be
 `65535`.  Therefore, the maximum value of the product is:
 
-{% math %}
+{% raw %}
+<script type="math/tex; mode=display">
 65535 \times 65535 < 2^{32} - 1
-{% endmath %}
+</script>
+{% endraw %}
 
 This product snugly fits into an unsigned 4 byte value.  So, to prevent overflow from a
 two byte value we can use a four byte variable to store the intermediate
@@ -83,7 +87,8 @@ the signal by about 3 dB.  It is very common to chose the -3 dB point as the cut
 This makes the -3 dB point a key performance parameter.  Using the equation for the cutoff
 parameter, we can calculate `alpha`.
 
-{% math %}
+{% raw %}
+<script type="math/tex; mode=display">
 \begin{aligned}
 \alpha & = \frac{T_{s}}{T_{s}+\tau_{c}} \text{with} \\
 \tau_{c} & = \frac{1}{2 \pi f_{c}} \text{gives us} \\
@@ -91,7 +96,8 @@ parameter, we can calculate `alpha`.
 \alpha & = \frac{0.5}{0.5+ \frac{1}{2 \pi \times 0.1}} \\
 \alpha & = 0.23906 
 \end{aligned}
-{% endmath %}
+</script>
+{% endraw %}
 
 ### -3 dB Point
 Here is a close up of the frequency response at the -3 dB point.

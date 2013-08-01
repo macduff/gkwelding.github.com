@@ -59,12 +59,15 @@ dfilt_single_pole_u16(uint16_t input, uint16_t prev_output, uint16_t alpha)
 First, let's look at the `beta` variable which is chosen to be `1-alpha`, where
 `alpha` is our only filter calibration constant.  Since the value of alpha is
 
-{% math %}
+{% raw %}
+<script type="math/tex; mode=display">
 \alpha = \frac{T_{s}}{T_{s} + \tau_{c}}
-{% endmath %}
+</script>
+{% endraw %}
 
-with {% m %}Ts > 0{% em %}
-and {% m %}\tau > 0{% em %} we see that `alpha` must always
+with {% raw %}<script type="math/tex">T_{s} > 0</script>{% endraw %}
+and {% raw %}<script type="math/tex">\tau > 0</script>{% endraw %}
+we see that `alpha` must always
 be less than one.  Equal to one would indicate that the inverse of the
 angular cutoff frequency is zero, meaning that the cutoff frequency is
 approaching infinity.  If this were so, there would be no need for a
@@ -89,16 +92,20 @@ data we'll use `bits` for the fixed point number and `fraction` for the
 engineering unit of `[0,1)`.  We can then to the following
 to calculate the scaling:
 
-{% math %}
+{% raw %}
+<script type="math/tex; mode=display">
 \frac{65536\text{ bits}}{1\text{ fraction}} = 65536\text{ bits/fraction}
-{% endmath %}
+</script>
+{% endraw %}
 
 So our scaling is 65536 bits/fraction, if expressed as a power of two
 we can use the formula:
 
-{% math %}
+{% raw %}
+<script type="math/tex; mode=display">
 R = \lfloor log_{2}(S) \rfloor
-{% endmath %}
+</script>
+{% endraw %}
 
 Where `S` is the desired scaling for the fixed point number and `R` is the
 binary shift required for the closest representation which is less than or

@@ -10,8 +10,15 @@ task :new do
 
   open("drafts/#{name}.md", 'a') do |f|
     f.puts "---"
+    f.puts "comments: true"
+    f.puts "date: 0000-00-00 15:00:00"
     f.puts "layout: post"
-    f.puts "title: \"DRAFT: #{name}\""
+    f.puts "slug: some-dash-delimited-phrase"
+    f.puts "title: My Title" 
+    f.puts "summary: \"Summary\""
+    f.puts "image: 'post-subfolder/image.png'"
+    f.puts "tags:"
+    f.puts "- atagname"
     f.puts "---"
   end
 end
