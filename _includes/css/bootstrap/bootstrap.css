@@ -968,7 +968,7 @@ address {
   font-style: normal;
   line-height: 20px;
 }
-/*
+
 code,
 pre {
   padding: 0 3px 2px;
@@ -978,15 +978,6 @@ pre {
   -webkit-border-radius: 3px;
      -moz-border-radius: 3px;
           border-radius: 3px;
-}
-
-code {
-  padding: 2px 4px;
-  color: #d14;
-	color: #333333
-  white-space: nowrap;
-  background-color: #f7f7f9;
-  border: 1px solid #e1e1e8;
 }
 
 pre {
@@ -1019,7 +1010,6 @@ pre code {
   background-color: transparent;
   border: 0;
 }
-*/
 
 .pre-scrollable {
   max-height: 340px;
