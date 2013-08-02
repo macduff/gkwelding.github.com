@@ -40,47 +40,57 @@ filter is very intuitive.  First order is often how we want and expect systems t
 respond.
 
 First, let's look at the starting point for our filter.
-We'll use {% m %}y{% em %} as the output of our filter
-and {% m %}u{% em %} as the input signal.  Let's look at the Laplace
-Transform of a first order analog filter.
+We'll use {% raw %}<script type="math/tex">y</script>{% endraw %} as the output
+of our filter and {% raw %}<script type="math/tex">u</script>{% endraw %} as the
+input signal.  Let's look at the Laplace Transform of a first order analog filter.
 
-{% math %}
+{% raw %}
+<script type="math/tex; mode=display">
 \frac{Y(s)}{U(s)} = \frac{1}{1 + \tau_{c}s}
-{% endmath %}
+</script>
+{% endraw %}
 
-Here the {% m %}\tau_{c}{% em %} is the reciprocal of the angular frequency
-of the cutoff for the first order filter.
+Here the {% raw %}<script type="math/tex">\tau_{c}</script>{% endraw %} is the
+reciprocal of the angular frequency of the cutoff for the first order filter.
 
-
-{% math %}
+{% raw %}
+<script type="math/tex; mode=display">
 \omega_{c} = 2 \pi f_{c} = \frac{1}{\tau_{c}}
-{% endmath %}
+</script>
+{% endraw %}
 
 Now, we'll do some algebra and put it in first order linear configuration.
 
-
-{% math %}
+{% raw %}
+<script type="math/tex; mode=display">
 Y(s) + \tau_{c}s Y(s) = U(s)
-{% endmath %}
+</script>
+{% endraw %}
 
 Now, let's perform a Laplace Transform and get the time domain representation
 of the equation.
 
-{% math %}
+{% raw %}
+<script type="math/tex; mode=display">
 y(t) + \tau_{c} \frac{dy}{dt} = u(t)
-{% endmath %}
+</script>
+{% endraw %}
 
 Next, we'll transform the equation from the continuous time domain to the
 discrete time domain using a backward Euler approximation.
 
-{% math %}
+{% raw %}
+<script type="math/tex; mode=display">
 \frac{dy}{dt} = \frac{y_{k}-y_{k-1}}{T_{s}} 
-{% endmath %}
+</script>
+{% endraw %}
 
-Where {% m %}T_{s}{% em %} is the period at which the signal is sampled.  Let's work
-through this, just to be exhaustive.
+Where {% raw %}<script type="math/tex">T_{s}</script>{% endraw %} is the
+period at which the signal is sampled.  Let's work through this, just to
+be exhaustive.
 
-{% math %}
+{% raw %}
+<script type="math/tex; mode=display">
 \begin{aligned}
 y_{k} + \tau_{c} \frac{y_{k}-y_{k-1}}{T_{s}} & = u_{k} \\
 y_{k}(1 + \frac{\tau_{c}}{T_{s}}) - y_{k-1} \frac{\tau_{c}}{T_{s}} & = u_{k} \\
@@ -90,25 +100,31 @@ y_{k} & = \frac{\tau_{c} + T_{s} - T_{s} }{T_{s} + \tau_{c}} y_{k-1} + \frac{T_{
 y_{k} & = ( \frac{T_{s} + \tau_{c}}{T_{s} + \tau_{c}} - \frac{T_{s}}{T_{s} + \tau_{c}} ) y_{k-1} + \frac{T_{s}}{T_{s} + \tau_{c}} u_{k} \\
 y_{k} & = ( 1 - \frac{T_{s}}{T_{s} + \tau_{c}} ) y_{k-1} + \frac{T_{s}}{T_{s} + \tau_{c}} u_{k}
 \end{aligned}
-{% endmath %}
+</script>
+{% endraw %}
 
 Then we let,
 
-{% math %}
+{% raw %}
+<script type="math/tex; mode=display">
 \alpha = \frac{T_{s}}{T_{s} + \tau_{c}}
-{% endmath %}
+</script>
+{% endraw %}
 
 and we get
-{% math %}
+
+{% raw %}
+<script type="math/tex; mode=display">
 y_{k} = ( 1 - \alpha ) y_{k-1} + \alpha u_{k}
-{% endmath %}
+</script>
+{% endraw %}
 
 Now we have a formula in the time domain that is a function of our
 
-* Sample time {% m %} T_{s} {% em %} 
-* Cutoff Frequency {% m %} \tau = \frac{1}{2 \pi f} {% em %}
-* Previous Output {% m %} y_{k-1} {% em %}
-* Current Input {% m %} u_{k} {% em %}
+* Sample time {% raw %}<script type="math/tex">T_{s}</script>{% endraw %} 
+* Cutoff Frequency {% raw %}<script type="math/tex">\tau = \frac{1}{2 \pi f}</script>{% endraw %}
+* Previous Output {% raw %}<script type="math/tex">y_{k-1}</script>{% endraw %}
+* Current Input {% raw %}<script type="math/tex">u_{k}</script>{% endraw %} 
 
 This form can now be used to write a short routine to run on a microcontroller.
 However, we may also need to write the routine using only fixed binary point
