@@ -5,7 +5,7 @@ layout: post
 slug: digital-filter-specification 
 title: Digital Filter Specifications 
 summary: "Digital Filter Specifications"
-image: 'digital-sampling/sinc.png'
+image: 'digital-sampling/filterresp.png'
 tags:
 - dsp
 ---
@@ -51,12 +51,15 @@ So if we would like a first order Butterworth filter, sampled at 100 Hz
 with a cutoff frequency of 15 Hz would be specified as:
 
 {% highlight matlab %}
- fs = 100;
- fc = 15;
- n = 1;
- Wc = fc/(0.5*fs);
- [b,a] = butter(n, Wc)
+ fs = 100;              % sampling frequency
+ fc = 15;               % desired filter cutoff frequency
+ n = 1;                 % filter order
+ Wc = fc/(0.5*fs);      % cutoff fraction of desired cutoff frequency
+ [b,a] = butter(n, Wc); % calculate filter coefficients
 {% endhighlight %}
+
+From this we get the coefficients for the complex discrete
+filter.
 
 {% raw %}
 <script type="math/tex; mode=display">
@@ -64,13 +67,17 @@ H(z) = \frac{0.33754z^{-1} + 0.33754}{z^{-1} - 0.32492}
 </script>
 {% endraw %}
 
+This can be used to evaluate the frequency response and plot
+the results.
 
 {% highlight matlab %}
-[h,w] = freqz(b,a);
-hh = 20*log10(h);
-II = (hh < -3);
-n = find(II,1,'first');
-plot( 0.5*fs*(w/pi), 20*log10(h),'LineWidth',2,0.5*fs*(w(n)/pi), 20*log10(h(n)),'o','markersize',20,'LineWidth',2 )
+[h,w] = freqz(b,a);     % get the filter complex frequency response
+hh = 20*log10(h);       % get the response in dB
+II = (hh < -3);         % get all values less than -3 dB
+n = find(II,1,'first'); % get the first index less than -3 dB
+% plot the frequency response
+plot( 0.5*fs*(w/pi), 20*log10(h),'LineWidth',2,...
+      0.5*fs*(w(n)/pi), 20*log10(h(n)),'o','markersize',20,'LineWidth',2 )
 title('Frequency Response of Butterworth Filter')
 ylabel('Amplitude (dB)')
 xlabel('Frequency (Hz)')

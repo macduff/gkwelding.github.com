@@ -80,16 +80,32 @@ be constructed from the different sampling.
 
 The Nyquist Frequency is an absolute minimum.  Some people almost treat
 it as a maximum.  I realize this may be hard to believe, but I have seen
-it.  The sampling frequency must be greater than twice the fastest frequency.  However, the original signal can not be reconstructed using a simple
-zero order hold.  Instead, it requires a pulse train, the samples, each
-mixed with a `sinc` function.  
+it.  The sampling frequency must be greater than twice the fastest
+frequency.  However, the original signal can not be reconstructed using a
+simple zero order hold.  Instead, it requires a pulse train, the samples,
+each mixed with a `sinc` function, which has the familiar form of:
+
+{% raw %}
+<script type="math/tex; mode=display">
+sinc(x) = \frac{sin(x)}{x}
+</script>
+{% endraw %}
 
 ![Sinc Function](/img/posts/digital-sampling/sinc.png)
 
-Since this function continues toward positive and negative infinity
-it is not a viable option for pratical digital signal processing.  Even
-a shifted truncated series is still computationally costly.  If at all
-possible, it is far easier and less error prone to "over" sample by
-a factor of 10.  We'll continue our discussion of filter specification
-next time.
+It can be shown that a signal sampled according to the Nyquist Frequency
+can be reconstructed *completely*, meaning that any point between the
+samples can be interpolated using the following equation.
+
+{% raw %}
+<script type="math/tex; mode=display">
+f(t) = sinc(\frac{\pi}{T} t) * \sum_{n=-\infty}^{\infty} f(nT) \delta(t-nT)
+</script>
+{% endraw %}
+
+Since the `sinc` function continues toward positive and negative infinity,
+mixing with any causal signal is not practical.  Even a shifted truncated
+series is still computationally costly.  If at all possible, it is far
+easier and less error prone to "over" sample by a factor of 10.  We'll
+continue our discussion of filter specification next time.
 
